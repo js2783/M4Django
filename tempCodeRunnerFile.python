@@ -1,0 +1,22 @@
+import sqlalchemy as sa
+
+connection = sa.create_engine('sqlite://')
+connection.execute('''CREATE TABLE books
+             (title VARCHAR(150),
+             author VARCHAR(50),
+             year INT)'''
+)
+ins = 'INSERT INTO books (title, author, year) VALUES (?, ?, ?)'
+connection.execute(ins, "The Weirdstone of Brisingamen", "Alan Garner", 1960)
+connection.execute(ins, "Perdido Street Station", "China Miéville", 2000)
+connection.execute(ins, "Thud!", "Terry Pratchett", 2005)
+connection.execute(ins, "The Spellman Files", "Lisa Lutz", 2007)
+connection.execute(ins, "Small Gods", "Terry Pratchett", 1992)
+
+rows = connection.execute('SELECT title FROM books ORDER BY title ASC')
+
+for row in rows:
+    print(rows)
+
+connection.commit()
+connection.close()
